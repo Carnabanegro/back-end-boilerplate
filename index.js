@@ -7,8 +7,8 @@ const { dbConecction } = require('./db/config');
 ///ROUTES IMPORTS
 const usuarios = require('./routes/usuarios.routes');
 const auth = require('./routes/auth.routes');
-//const medicos = require('./routes/medicos.routes');
-//const hospitales = require('./routes/hospitales.routes');
+const medicos = require('./routes/medicos.routes');
+const hospitales = require('./routes/hostipales.routes');
 
 //DB CONNECTION
 dbConecction();
@@ -22,8 +22,8 @@ app.use(express.json());
 //ROUTES
 app.use('/api/usuarios',usuarios);
 app.use('/api/login',auth);
-//app.use('/api/medicos',medicos):
-//app.use('/api/hospitales',hospitales);
+app.use('/api/medicos',medicos);
+app.use('/api/hospitales',hospitales);
 
 
 app.get('/', (req,res) =>{
