@@ -22,7 +22,6 @@ router.put('/updateHospital/:id',
     [
         validarJWT,
         check('nombre','El nombre es obligatorio').not().isEmpty(),
-        check('usuario', 'El hospital debe registrar que usuario lo subio').not().isEmpty(),
         validarCampos
         
     ],

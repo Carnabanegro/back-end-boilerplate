@@ -56,13 +56,14 @@ const crearHospital = async(req,res) =>{
 
 const updateHospital = async(req,res = response) =>{
 
-    const mid = req.params.id;
+    const hid = req.params.id;
+
 
     try {
 
-        const HospitalExiste = await Hospital.findById(mid);
+        const hospitalExiste = await Hospital.findById(hid);
 
-        if (!HospitalExiste){
+        if (!hospitalExiste){
             return res.status(400).json({
                 ok:false,
                 msg: 'No existe el hospital'
@@ -84,7 +85,7 @@ const updateHospital = async(req,res = response) =>{
             }
         }
 
-        const hospitalActualizado = await Hospital.findByIdAndUpdate(mid,campos, {new:true});
+        const hospitalActualizado = await Hospital.findByIdAndUpdate(hid,campos, {new:true});
 
         res.status(200).json({
             ok: true,
@@ -110,8 +111,8 @@ const borrarHospital = async(req,res = response) => {
 
     try {
         
-        const mid = req.params.id
-        const hospital = Hospital.findById(mid);
+        const hid = req.params.id
+        const hospital = Hospital.findById(hid);
 
         if (!hospital){
             return res.status(400).json({
@@ -120,7 +121,7 @@ const borrarHospital = async(req,res = response) => {
             })
         }
 
-        const hospitalBorrado = await Hospital.findByIdAndDelete(mid);
+        const hospitalBorrado = await Hospital.findByIdAndDelete(hid);
 
         res.status(200).json({
             ok: true,
