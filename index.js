@@ -9,6 +9,8 @@ const usuarios = require('./routes/usuarios.routes');
 const auth = require('./routes/auth.routes');
 const medicos = require('./routes/medicos.routes');
 const hospitales = require('./routes/hostipales.routes');
+const busqueda = require('./routes/busqueda.routes');
+const upload = require('./routes/upload.routes');
 
 //DB CONNECTION
 dbConecction();
@@ -24,6 +26,8 @@ app.use('/api/usuarios',usuarios);
 app.use('/api/login',auth);
 app.use('/api/medicos',medicos);
 app.use('/api/hospitales',hospitales);
+app.use('/api/todo',busqueda);
+app.use('/api/upload',upload);
 
 
 app.get('/', (req,res) =>{

@@ -6,7 +6,11 @@ const { findOne } = require('../models/medico.model');
 
 const getMedicos = async(req,res = response) =>{
 
-    const medicos = await Medico.find();
+    const medicos = await Medico.find()
+                    .populate('usuario','nombre img')
+                    .populate('hospital','nombre img');
+
+                    
     res.status(200).json({
         ok: true,
         medicos,

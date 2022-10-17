@@ -5,10 +5,21 @@ const { generateJWT } = require('../helpers/JWT.helpers');
 
 const getUsuarios = async(req,res = response) =>{
 
-    const usuarios = await Usuario.find();
+    const desde = Number(req.query.desde) || 0;
+    const cant = Number(req.query.cant) || 5;
+
+    const [usuarios, total] = await Promise.all([
+        Usuario.find()
+                .skip(desde)
+                .limit(cant),
+        Usuario.count()
+    ]);
+
+
     res.status(200).json({
         ok: true,
         usuarios: usuarios,
+        total,
         msg: "LISTADO DE USUARIOS"
     });
 }
@@ -16,7 +27,7 @@ const getUsuarios = async(req,res = response) =>{
 
 const crearUsuario = async(req,res) =>{
 
-    const {nombre,password,email} = req.body;
+    const {password,email} = req.body;
 
     
 
