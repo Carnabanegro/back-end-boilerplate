@@ -32,7 +32,7 @@ const login = async(req,res = response,next) =>{
 
         
         ///GENERO TOKEN
-        const token= await generateJWT(usuarioDB);
+        const token= await generateJWT(usuarioDB.id);
 
         res.status(200).json({
             ok: true,
@@ -53,4 +53,23 @@ const login = async(req,res = response,next) =>{
 }
 
 
-module.exports = {login} ;
+
+const renewToken = async(req, res = response) => {
+
+    const uid = req.uid;
+
+    // Generar el TOKEN - JWT
+    const token = await generateJWT( uid );
+    const usuario = await Usuario.findById( uid );
+
+
+    res.json({
+        ok: true,
+        token,
+        usuario
+    });
+
+}
+
+
+module.exports = {login,renewToken} ;

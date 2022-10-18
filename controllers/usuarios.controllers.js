@@ -24,6 +24,25 @@ const getUsuarios = async(req,res = response) =>{
     });
 }
 
+const getUsuario = async(req,res = response) =>{
+    const id = req.params.id ;
+    const usuario = await  Usuario.findById(id);
+
+    if (!usuario) {
+        return res.status(400).json({
+            ok:false,
+            msg: 'Usuario no encontrado'
+        })
+    }
+
+    res.status(200).json({
+        ok: true,
+        usuario,
+        msg: "USUARIO ENCONTRADO"
+    });
+    
+}
+
 
 const crearUsuario = async(req,res) =>{
 
@@ -52,7 +71,7 @@ const crearUsuario = async(req,res) =>{
 
         var usuarioGuardado  = await usuario.save();
         usuarioGuardado = await Usuario.findById(usuarioGuardado.id)
-        const token = await generateJWT(usuarioGuardado);
+        const token = await generateJWT(usuarioGuardado.id);
     
         res.status(200).json({
             ok: true,
@@ -105,7 +124,7 @@ const updateUsuario = async(req,res = response) =>{
 
         delete campos.password;
         delete campos.google;
-        console.log(uid)
+    
         const usuarioActualizado = await Usuario.findByIdAndUpdate(uid,campos, {new:true});
 
         res.status(200).json({
@@ -163,4 +182,4 @@ const borrarUsuario = async(req,res = response) => {
 
 }
 
-module.exports = {getUsuarios,crearUsuario,updateUsuario,borrarUsuario};
+module.exports = {getUsuarios,crearUsuario,updateUsuario,borrarUsuario,getUsuario};
