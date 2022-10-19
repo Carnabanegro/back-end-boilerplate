@@ -40,7 +40,30 @@ const getUsuario = async(req,res = response) =>{
         usuario,
         msg: "USUARIO ENCONTRADO"
     });
-    
+  
+
+}
+
+const getUsuariosByName = async(req,res = response) =>{
+
+    const desde = Number(req.query.desde) || 0;
+    const cant = Number(req.query.cant) || 5;
+    const name = req.params.name || '';
+    const regex = RegExp( name, 'i' );
+
+    const [usuarios, total] = await Promise.all([
+        Usuario.find({nombre:regex})
+                .skip(desde)
+                .limit(cant),
+        Usuario.count({nombre:regex})
+    ]);
+
+    res.status(200).json({
+        ok: true,
+        usuarios: usuarios,
+        total,
+        msg: "LISTADO DE USUARIOS"
+    });
 }
 
 
@@ -182,4 +205,4 @@ const borrarUsuario = async(req,res = response) => {
 
 }
 
-module.exports = {getUsuarios,crearUsuario,updateUsuario,borrarUsuario,getUsuario};
+module.exports = {getUsuarios,crearUsuario,updateUsuario,borrarUsuario,getUsuario,getUsuariosByName};
